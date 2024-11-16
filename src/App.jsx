@@ -1,34 +1,75 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useCallback, useState } from 'react'
+
 import './App.css'
+import Particles from 'react-tsparticles'
+import { loadFull } from 'tsparticles'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(50)
+
+  const init = useCallback(async (engine) => {
+    await loadFull(engine)
+  })
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+    <div className="App">
+      <Particles options={{
+        particles: {
+          color: {
+            value: "#fff"
+          },
+          number: {
+            value: count
+          },
+          opacity: {
+            value: { min: 0.3, max: 1 }
+          },
+          shape: {
+            type: "circle"
+          },
+          size: {
+            value: { min: 1, max: 5 }
+          },
+          move: {
+            direction: "bottom-right",
+            enable: true,
+            speed: { min: 3, max: 5 },
+            straight: true
+          }
+        }
+      }} init={init} />
+      <header className="App-header">
+
+        <p>Hello Vite + React!</p>
         <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+          <button type="button" onClick={() => setCount((count) => count * 1.2)}>
+            count is: {count}
+          </button>
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+        <p>
+          Edit <code>App.jsx</code> and save to test HMR updates.
+        </p>
+        <p>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+          {' | '}
+          <a
+            className="App-link"
+            href="https://vitejs.dev/guide/features.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Vite Docs
+          </a>
+        </p>
+      </header>
+    </div>
   )
 }
 
